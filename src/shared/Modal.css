@@ -1,0 +1,32 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgba(29, 31, 32, 0.5);
+  z-index: 100;
+}
+ 
+.modal {
+  width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+}
+ 
+.modal__title {
+  font-size: 18px;
+}
+ 
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
