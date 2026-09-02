@@ -278,7 +278,7 @@ export default function HomePage() {
           </div>
         </div>
         <p className="home-footer__copyright">
-          Built as a student project for Web Development Assessment 2. Not a real financial product.
+          Built by Charity, Sonam & Zubair for Web Development Assessment 2.
         </p>
       </footer>
     </div>

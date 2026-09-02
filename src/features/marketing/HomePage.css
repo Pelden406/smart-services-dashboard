@@ -558,8 +558,9 @@
 
 /* — footer — */
 .home-footer {
-  border-top: 1px solid var(--color-border);
+  border-top: 6px solid var(--color-border);
   padding: var(--space-6) var(--space-4);
+  background: var(--color-surface-muted); 
 }
 
 .home-footer__inner {
