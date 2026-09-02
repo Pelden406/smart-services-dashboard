@@ -1,0 +1,92 @@
+.signin-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.signin-page__brand {
+  background: var(--color-accent-800);
+  color: #fff;
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.signin-page__brand-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.signin-page__brand-copy {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-accent-200);
+  max-width: 420px;
+}
+
+.signin-page__form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  background: var(--color-bg);
+}
+
+.signin-page__form {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.signin-page__form h1 {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.signin-page__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.signin-page__remember {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.signin-page__link {
+  color: var(--color-accent-700);
+  cursor: default;
+}
+
+.signin-page__signup {
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .signin-page {
+    flex-direction: row;
+  }
+
+  .signin-page__brand {
+    flex: 1;
+    justify-content: center;
+    padding: var(--space-8);
+  }
+
+  .signin-page__form-panel {
+    flex: 1;
+  }
+}

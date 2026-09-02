@@ -5,14 +5,15 @@
  */
 import { Outlet } from 'react-router-dom';
 import TopNav from './TopNav';
+import Footer from './Footer';
 import LoadingSkeleton from './LoadingSkeleton';
 import ErrorState from './ErrorState';
 import { useServices } from '../context/ServicesContext';
 import './AppLayout.css';
- 
+
 export default function AppLayout() {
   const { status, retry } = useServices();
- 
+
   return (
     <div className="app-layout">
       <TopNav />
@@ -21,6 +22,7 @@ export default function AppLayout() {
         {status === 'error' && <ErrorState onRetry={retry} />}
         {status === 'success' && <Outlet />}
       </main>
+      <Footer />
     </div>
   );
 }

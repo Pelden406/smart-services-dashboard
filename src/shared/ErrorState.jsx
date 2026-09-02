@@ -3,7 +3,7 @@
  * Purpose: Shown when the simulated data fetch fails; lets the user retry.
  */
 import './ErrorState.css';
- 
+
 export default function ErrorState({ onRetry }) {
   return (
     <div className="error-state" role="alert">
