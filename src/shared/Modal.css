@@ -7,7 +7,7 @@
   background: rgba(29, 31, 32, 0.5);
   z-index: 100;
 }
- 
+
 .modal {
   width: min(420px, 100%);
   display: flex;
@@ -18,11 +18,11 @@
   background: var(--color-surface);
   box-shadow: var(--shadow-lg);
 }
- 
+
 .modal__title {
   font-size: 18px;
 }
- 
+
 .modal__body {
   display: flex;
   flex-direction: column;

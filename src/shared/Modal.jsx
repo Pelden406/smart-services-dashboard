@@ -5,7 +5,7 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import './Modal.css';
- 
+
 export default function Modal({ open, title, onClose, children }) {
   useEffect(() => {
     if (!open) return;
@@ -15,9 +15,9 @@ export default function Modal({ open, title, onClose, children }) {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
- 
+
   if (!open) return null;
- 
+
   return createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <div
@@ -36,4 +36,3 @@ export default function Modal({ open, title, onClose, children }) {
     document.body,
   );
 }
- 

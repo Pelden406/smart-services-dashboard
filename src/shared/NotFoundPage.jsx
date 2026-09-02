@@ -3,7 +3,7 @@
  * Purpose: Fallback screen for any unmatched route.
  */
 import { Link } from 'react-router-dom';
- 
+
 export default function NotFoundPage() {
   return (
     <div>
@@ -14,4 +14,3 @@ export default function NotFoundPage() {
     </div>
   );
 }
- 
