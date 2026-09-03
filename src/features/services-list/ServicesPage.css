@@ -1,0 +1,22 @@
+.services-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+ 
+.services-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+ 
+.services-page__header h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+ 
+.services-page__toolbar {
+  display: flex;
+  gap: var(--space-3);
+}

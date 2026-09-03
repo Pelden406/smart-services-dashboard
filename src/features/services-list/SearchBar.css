@@ -1,0 +1,9 @@
+.search-bar {
+  flex: 1;
+  min-width: 160px;
+}
+ 
+.search-bar__input {
+  width: 100%;
+}
+ 
