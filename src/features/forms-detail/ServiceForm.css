@@ -1,0 +1,95 @@
+.service-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+ 
+.service-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+ 
+.service-form span#billing-cycle-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+ 
+.seg {
+  display: flex;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+ 
+.seg__option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-2);
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+  min-height: 44px;
+}
+ 
+.seg__option + .seg__option {
+  border-left: 1px solid var(--color-border-strong);
+}
+ 
+.seg__option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+ 
+.seg__option.is-selected {
+  background: var(--color-accent-600);
+  color: #fff;
+}
+ 
+.seg__option:hover:not(.is-selected) {
+  background: var(--color-surface-muted);
+}
+ 
+.seg__option:has(input:focus-visible) {
+  outline: 2px solid var(--color-accent-600);
+  outline-offset: -2px;
+}
+ 
+.service-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+ 
+.service-form__hint {
+  font-size: 12px;
+  color: var(--color-text-subtle);
+  margin: 0;
+}
+ 
+.service-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+ 
+@media (min-width: 640px) {
+  .service-form__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+ 

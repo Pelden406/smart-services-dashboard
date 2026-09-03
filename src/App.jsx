@@ -22,9 +22,6 @@ export default function App() {
     <ServicesProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="signin" element={<SignInPage />} />
-          <Route path="onboarding" element={<OnboardingPage />} />
           <Route element={<AppLayout />}>
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="services" element={<ServicesPage />} />
