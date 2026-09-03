@@ -1,7 +1,3 @@
-/**
- * Owner: Shared
- * Purpose: Route table for the whole app — coordinated by all members at project start.
- */
 import { Navigate, Route, BrowserRouter, Routes } from 'react-router-dom';
 import AppLayout from './shared/AppLayout';
 import NotFoundPage from './shared/NotFoundPage';
