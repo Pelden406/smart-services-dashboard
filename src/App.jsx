@@ -1,5 +1,5 @@
 /**
- * Owner: Shared by all members
+ * Owner: Shared
  * Purpose: Route table for the whole app — coordinated by all members at project start.
  */
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
@@ -22,6 +22,9 @@ export default function App() {
     <ServicesProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="signin" element={<SignInPage />} />
+          <Route path="onboarding" element={<OnboardingPage />} />
           <Route element={<AppLayout />}>
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="services" element={<ServicesPage />} />
