@@ -1,7 +1,7 @@
 /**
- * Owner: Charity — Dashboard & Data Layer
- * Purpose: Top-level dashboard content — stats row, upcoming renewals and a
- * spend-by-category chart, all derived from the shared services list.
+ * Owner: Charity — Dashboard Overview layout
+ * Purpose: Top-level dashboard content consisting of stats row, upcoming renewals and a
+ * spend by category chart, all derived from the shared services list.
  */
 import { Link } from 'react-router-dom';
 import StatsCard from './StatsCard';
