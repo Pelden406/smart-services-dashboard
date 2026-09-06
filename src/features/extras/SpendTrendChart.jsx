@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Charity
  * Purpose: Stacked-bar monthly spend trend by category, for the Analytics screen.
  */
 import { SPEND_TREND_CATEGORIES } from '../../data/spendTrend';
