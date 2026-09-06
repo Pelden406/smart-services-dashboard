@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Zubair
  * Purpose: 3-step first-run flow — intro, choose what to track, turn on
  * reminders — then continue into the dashboard.
  */
