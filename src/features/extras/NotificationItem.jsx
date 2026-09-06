@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Sonam
  * Purpose: A single notification row — unread dot, title, meta, and an
  * optional link through to the related service.
  */
