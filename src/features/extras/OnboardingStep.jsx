@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Zubair
  * Purpose: Presentational shell for one onboarding step — progress bar,
  * heading, body content, and Back/Skip/Next navigation.
  */

@@ -1,6 +1,6 @@
 /**
- * Owner: Charity — Dashboard & Data Layer
- * Purpose: Simple CSS bar chart of monthly spend per category (also reused
+ * Owner: Charity — Spend by category chart
+ * Purpose: Simple bar chart of monthly spend per category ( reused
  * by the Analytics screen's category-breakdown panel).
  */
 import { formatCurrency } from '../../data/serviceUtils';

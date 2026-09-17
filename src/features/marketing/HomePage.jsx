@@ -1,10 +1,11 @@
 /**
- * Owner: Shared
- * Purpose: Public marketing homepage at "/" — hero, feature highlights,
- * social proof and calls to action into sign-in. Structured after
- * rocketmoney.com (sticky nav, hero panel, alternating feature rows,
- * testimonial grid, closing CTA banner) but built on this app's own
+ * Owner: Charity
+ * Purpose: Public marketing homepage for feature highlights,
+ * social proof and calls to action into sign-in. Structured after 
+ * Rocket money (n.d) but built on this app's own
  * design tokens and content.
+ References
+ Rocket Money - Take control of your money. (n.d.). Rocket Money - Take Control of Your Money. Retrieved September 2, 2026, from https://www.rocketmoney.com/
  */
 import { Link } from 'react-router-dom';
 import './HomePage.css';

@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Sonam
  * Purpose: Profile fields and notification preferences, persisted to localStorage.
  */
 import { useState } from 'react';

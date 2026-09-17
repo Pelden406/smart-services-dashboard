@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Sonam
  * Purpose: Notification list with read/unread state, tab filters, and
  * mark-as-read / mark-all-read actions.
  */

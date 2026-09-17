@@ -1,31 +1,55 @@
 /**
  * Owner: Shared
  * Purpose: Top navigation bar — brand and primary links to every screen.
+ * Collapses into a hamburger menu on mobile widths.
  */
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './TopNav.css';
 
 export default function TopNav() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const links = [
+    { to: '/dashboard', label: 'Dashboard' },
+    { to: '/services', label: 'Services' },
+    { to: '/notifications', label: 'Notifications' },
+    { to: '/analytics', label: 'Analytics' },
+    { to: '/settings', label: 'Settings' },
+  ];
+
   return (
     <header className="top-nav">
       <div className="top-nav__inner">
         <span className="top-nav__brand">SmartServices</span>
-        <nav className="top-nav__links" aria-label="Primary">
-          <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
-            Dashboard
-          </NavLink>
-          <NavLink to="/services" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
-            Services
-          </NavLink>
-          <NavLink to="/notifications" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
-            Notifications
-          </NavLink>
-          <NavLink to="/analytics" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
-            Analytics
-          </NavLink>
-          <NavLink to="/settings" className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
-            Settings
-          </NavLink>
+
+        <button
+          className="top-nav__toggle"
+          onClick={() => setIsOpen((open) => !open)}
+          aria-expanded={isOpen}
+          aria-controls="primary-nav"
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+        >
+          <span className="top-nav__toggle-bar" />
+          <span className="top-nav__toggle-bar" />
+          <span className="top-nav__toggle-bar" />
+        </button>
+
+        <nav
+          id="primary-nav"
+          className={`top-nav__links ${isOpen ? 'is-open' : ''}`}
+          aria-label="Primary"
+        >
+          {links.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) => (isActive ? 'is-active' : undefined)}
+            >
+              {label}
+            </NavLink>
+          ))}
         </nav>
       </div>
     </header>

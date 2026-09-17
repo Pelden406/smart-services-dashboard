@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Charity
  * Purpose: Spend trends, category breakdown, savings goal and biggest
  * movers. Reuses the Dashboard's SpendByCategoryChart component.
  */

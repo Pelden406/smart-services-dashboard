@@ -1,5 +1,5 @@
 /**
- * Owner: Unassigned — bonus screen beyond the core 3-person task split
+ * Owner: Zubair
  * Purpose: Sign-in screen. No real backend; a valid submission simulates
  * login and continues into the dashboard.
  */

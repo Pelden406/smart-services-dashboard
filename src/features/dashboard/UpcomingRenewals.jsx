@@ -1,5 +1,5 @@
 /**
- * Owner: Charity — Dashboard & Data Layer
+ * Owner: Charity — Upcoming Renewals
  * Purpose: Table of the soonest-renewing active services, shown on the dashboard.
  */
 import { Link } from 'react-router-dom';

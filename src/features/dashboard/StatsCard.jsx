@@ -1,5 +1,5 @@
 /**
- * Owner: Charity — Dashboard & Data Layer
+ * Owner: Charity — Stastistics card
  * Purpose: A single summary metric tile used in the dashboard's stats row.
  */
 import './StatsCard.css';

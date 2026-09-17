@@ -1,2 +1,6 @@
+/**
+*Owner- Shared
+*Purpose- To load all the shared layout pages like colors, fonts, and spacing values
+**/
 @import './styles/tokens.css';
 @import './styles/global.css';
