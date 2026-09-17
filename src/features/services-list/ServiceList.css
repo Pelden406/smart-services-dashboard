@@ -1,0 +1,63 @@
+/* Mobile-first: card grid shown by default, table hidden until desktop. */
+.service-list__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+ 
+.service-list__table {
+  display: none;
+}
+ 
+@media (min-width: 768px) {
+  .service-list__cards {
+    display: none;
+  }
+ 
+  .service-list__table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    font-size: 14px;
+  }
+ 
+  .service-list__table th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-subtle);
+    font-weight: 500;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+ 
+  .service-list__table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+ 
+  .service-list__table tbody tr:last-child td {
+    border-bottom: none;
+  }
+ 
+  .service-list__table tbody tr:hover {
+    background: var(--color-surface-muted);
+  }
+ 
+  .service-list__table a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+ 
+  .service-list__table a:hover {
+    color: var(--color-accent-700);
+    text-decoration: underline;
+  }
+}
+ 
