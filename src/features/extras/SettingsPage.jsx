@@ -4,11 +4,11 @@
  */
 import { useState } from 'react';
 import './SettingsPage.css';
-
+ 
 const STORAGE_KEY = 'smart-services-dashboard:profile';
 const CURRENCIES = ['AUD', 'USD', 'EUR', 'GBP'];
 const TIME_ZONES = ['AEST', 'AEDT', 'UTC', 'PST', 'EST'];
-
+ 
 const DEFAULT_PROFILE = {
   fullName: 'A. Student',
   email: 'a.student@domain.com',
@@ -17,16 +17,26 @@ const DEFAULT_PROFILE = {
   emailReminders: true,
   weeklyDigest: false,
 };
-
+ 
 function loadProfile() {
+  let accountDefaults = DEFAULT_PROFILE;
+  try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      accountDefaults = { ...DEFAULT_PROFILE, fullName: user.name, email: user.email };
+    }
+  } catch {
+    // no logged-in user record — fall back to the placeholder defaults
+  }
+ 
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? { ...DEFAULT_PROFILE, ...JSON.parse(stored) } : DEFAULT_PROFILE;
+    return stored ? { ...accountDefaults, ...JSON.parse(stored) } : accountDefaults;
   } catch {
-    return DEFAULT_PROFILE;
+    return accountDefaults;
   }
 }
-
+ 
 function initials(name) {
   return name
     .split(' ')
@@ -35,14 +45,14 @@ function initials(name) {
     .slice(0, 2)
     .toUpperCase();
 }
-
+ 
 export default function SettingsPage() {
   const [saved, setSaved] = useState(loadProfile);
   const [draft, setDraft] = useState(saved);
   const [savedMessage, setSavedMessage] = useState(false);
-
+ 
   const setField = (field, value) => setDraft((prev) => ({ ...prev, [field]: value }));
-
+ 
   const handleSave = (event) => {
     event.preventDefault();
     try {
@@ -54,13 +64,13 @@ export default function SettingsPage() {
     setSavedMessage(true);
     setTimeout(() => setSavedMessage(false), 2000);
   };
-
+ 
   const handleDiscard = () => setDraft(saved);
-
+ 
   return (
     <div className="settings-page">
-      <h2>Settings</h2>
-
+      <h1>Settings</h1>
+ 
       <form className="settings-page__form" onSubmit={handleSave}>
         <div className="settings-page__avatar-row">
           <div className="settings-page__avatar" aria-hidden="true">
@@ -70,7 +80,7 @@ export default function SettingsPage() {
             Replace
           </button>
         </div>
-
+ 
         <div className="settings-page__grid">
           <div className="field">
             <label htmlFor="settings-name">Full name</label>
@@ -122,7 +132,7 @@ export default function SettingsPage() {
             </select>
           </div>
         </div>
-
+ 
         <div className="settings-page__preferences">
           <label className="settings-page__toggle-row">
             <span>Email renewal reminders</span>
@@ -141,7 +151,7 @@ export default function SettingsPage() {
             />
           </label>
         </div>
-
+ 
         <div className="settings-page__footer">
           {savedMessage && (
             <span className="settings-page__saved" role="status">

@@ -1,20 +1,11 @@
-// Mock monthly spend history by category, for the Analytics screen's trend
-// chart. This is separate from the live services list (which only tracks
-// the current state of each service, not its cost history).
-
+// Category constants + helpers for the Analytics screen's spend trend
+// chart. Trend data itself comes from the API (see
+// ServicesContext.getSpendTrend) rather than mock data.
+ 
 export const SPEND_TREND_CATEGORIES = ['Utility', 'Subscription', 'Booking'];
-
-export const spendTrend = [
-  { month: 'Apr', Utility: 220, Subscription: 40, Booking: 120 },
-  { month: 'May', Utility: 230, Subscription: 45, Booking: 125 },
-  { month: 'Jun', Utility: 210, Subscription: 50, Booking: 130 },
-  { month: 'Jul', Utility: 245, Subscription: 48, Booking: 135 },
-  { month: 'Aug', Utility: 240, Subscription: 55, Booking: 138 },
-  { month: 'Sep', Utility: 254, Subscription: 57, Booking: 140 },
-];
-
+ 
 /** Month-over-month % change per category, using the last two data points. */
-export function categoryDeltas(trend = spendTrend) {
+export function categoryDeltas(trend) {
   const latest = trend[trend.length - 1];
   const previous = trend[trend.length - 2];
   return SPEND_TREND_CATEGORIES.map((category) => {
@@ -22,3 +13,4 @@ export function categoryDeltas(trend = spendTrend) {
     return { category, change };
   }).sort((a, b) => Math.abs(b.change) - Math.abs(a.change));
 }
+ 

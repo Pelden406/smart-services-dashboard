@@ -8,13 +8,14 @@
   max-width: 360px;
   margin: 0 auto;
 }
-
+ 
+.error-state h1,
 .error-state h2 {
   color: var(--color-danger);
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-
+ 
 .error-state p {
   color: var(--color-text-muted);
   font-size: 14px;

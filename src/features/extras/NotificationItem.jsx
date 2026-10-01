@@ -5,10 +5,10 @@
  */
 import { Link } from 'react-router-dom';
 import './NotificationItem.css';
-
+ 
 export default function NotificationItem({ notification, onMarkRead }) {
   const { title, meta, read, serviceId } = notification;
-
+ 
   return (
     <li className={`notification-item${read ? '' : ' is-unread'}`}>
       <span className="notification-item__dot" aria-hidden="true" />
@@ -23,7 +23,12 @@ export default function NotificationItem({ notification, onMarkRead }) {
           </Link>
         )}
         {!read && (
-          <button type="button" className="notification-item__link" onClick={() => onMarkRead(notification.id)}>
+          <button
+            type="button"
+            className="notification-item__link"
+            onClick={() => onMarkRead(notification.id)}
+            aria-label={`Mark "${title}" as read`}
+          >
             Mark read
           </button>
         )}

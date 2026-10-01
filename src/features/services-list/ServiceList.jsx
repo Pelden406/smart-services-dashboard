@@ -1,4 +1,10 @@
-import { Link } from 'react-router-dom';
+/**
+ * Owner: Sonam — Services List & Search/Filter
+ * Purpose: Renders services as a table on desktop and as ServiceCards on
+ * mobile (both exist in the DOM; CSS toggles which is visible).
+ */
+ 
+import { Link, useNavigate } from 'react-router-dom';
 import ServiceCard from './ServiceCard';
 import StatusBadge from '../../shared/StatusBadge';
 import EmptyState from '../../shared/EmptyState';
@@ -6,6 +12,13 @@ import { formatCurrency, formatDate } from '../../data/serviceUtils';
 import './ServiceList.css';
  
 export default function ServiceList({ services, totalCount }) {
+  const navigate = useNavigate();
+ 
+  const goToService = (id) => (event) => {
+    if (event.target.closest('a')) return;
+    navigate(`/services/${id}`);
+  };
+ 
   if (services.length === 0) {
     return totalCount === 0 ? (
       <EmptyState
@@ -42,7 +55,7 @@ export default function ServiceList({ services, totalCount }) {
         </thead>
         <tbody>
           {services.map((service) => (
-            <tr key={service.id}>
+            <tr key={service.id} className="service-list__row" onClick={goToService(service.id)}>
               <td data-label="Service">
                 <Link to={`/services/${service.id}`}>{service.name}</Link>
               </td>
