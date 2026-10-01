@@ -5,14 +5,14 @@
  */
 import { formatCurrency } from '../../data/serviceUtils';
 import './SpendByCategoryChart.css';
-
+ 
 export default function SpendByCategoryChart({ totals }) {
   const entries = Object.entries(totals);
   const max = Math.max(...entries.map(([, value]) => value), 1);
-
+ 
   return (
     <section className="spend-chart" aria-labelledby="spend-chart-heading">
-      <h3 id="spend-chart-heading">Spend by category</h3>
+      <h2 id="spend-chart-heading">Spend by category</h2>
       <div className="spend-chart__bars" role="img" aria-label={entries.map(([cat, value]) => `${cat}: ${formatCurrency(value)}`).join(', ')}>
         {entries.map(([category, value]) => (
           <div className="spend-chart__bar-col" key={category}>
