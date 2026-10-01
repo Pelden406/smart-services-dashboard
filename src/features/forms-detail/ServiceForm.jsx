@@ -8,9 +8,19 @@ import { useNavigate } from 'react-router-dom';
 import { CATEGORIES, BILLING_CYCLES } from '../../data/services';
 import './ServiceForm.css';
  
+const FIELD_ORDER = ['name', 'provider', 'category', 'cost', 'renewalDate'];
+const FIELD_IDS = {
+  name: 'service-name',
+  provider: 'service-provider',
+  category: 'service-category',
+  cost: 'service-cost',
+  renewalDate: 'service-renewal',
+};
+ 
 function validate(values) {
   const errors = {};
   if (!values.name.trim()) errors.name = 'Service name is required.';
+  if (!values.provider.trim()) errors.provider = 'Provider is required.';
   if (!values.category) errors.category = 'Choose a category.';
  
   if (values.cost === '' || values.cost === null) {
@@ -28,6 +38,7 @@ export default function ServiceForm({ initialValues, onSubmit, submitLabel = 'Sa
   const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
   const [touched, setTouched] = useState({});
+  const [attempted, setAttempted] = useState(false);
  
   const errors = validate(values);
   const isValid = Object.keys(errors).length === 0;
@@ -38,13 +49,30 @@ export default function ServiceForm({ initialValues, onSubmit, submitLabel = 'Sa
  
   const handleSubmit = (event) => {
     event.preventDefault();
-    setTouched({ name: true, category: true, cost: true, renewalDate: true });
-    if (!isValid) return;
+    setTouched({ name: true, provider: true, category: true, cost: true, renewalDate: true });
+    if (!isValid) {
+      setAttempted(true);
+      const firstInvalidField = FIELD_ORDER.find((field) => errors[field]);
+      if (firstInvalidField) document.getElementById(FIELD_IDS[firstInvalidField])?.focus();
+      return;
+    }
+    setAttempted(false);
     onSubmit({ ...values, cost: Number(values.cost) });
   };
  
   return (
     <form className="service-form" onSubmit={handleSubmit} noValidate>
+      {attempted && Object.keys(errors).length > 0 && (
+        <div className="form-error-summary" role="alert">
+          <p>Please fix the following:</p>
+          <ul>
+            {FIELD_ORDER.filter((field) => errors[field]).map((field) => (
+              <li key={field}>{errors[field]}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+ 
       <div className="service-form__grid">
         <div className="field">
           <label htmlFor="service-name">Service name *</label>
@@ -61,6 +89,26 @@ export default function ServiceForm({ initialValues, onSubmit, submitLabel = 'Sa
           {showError('name') && (
             <span id="service-name-error" className="error" role="alert">
               {errors.name}
+            </span>
+          )}
+        </div>
+ 
+        <div className="field">
+          <label htmlFor="service-provider">Provider *</label>
+          <input
+            id="service-provider"
+            className={`input${showError('provider') ? ' is-invalid' : ''}`}
+            value={values.provider}
+            onChange={(e) => setField('provider', e.target.value)}
+            onBlur={() => markTouched('provider')}
+            placeholder="e.g. Netflix Inc"
+            aria-invalid={Boolean(showError('provider'))}
+            aria-describedby={showError('provider') ? 'service-provider-error' : undefined}
+            required
+          />
+          {showError('provider') && (
+            <span id="service-provider-error" className="error" role="alert">
+              {errors.provider}
             </span>
           )}
         </div>
@@ -161,13 +209,13 @@ export default function ServiceForm({ initialValues, onSubmit, submitLabel = 'Sa
         Remind me 7 days before renewal
       </label>
  
-      <p className="service-form__hint">Inline validation runs on blur — save is disabled until every required field is valid.</p>
+      <p className="service-form__hint">Inline validation runs on blur — Save checks every field and lists anything that needs fixing.</p>
  
       <div className="service-form__actions">
         <button type="button" className="btn btn-secondary" onClick={() => navigate(-1)}>
           Cancel
         </button>
-        <button type="submit" className="btn btn-primary" disabled={!isValid}>
+        <button type="submit" className="btn btn-primary">
           {submitLabel}
         </button>
       </div>

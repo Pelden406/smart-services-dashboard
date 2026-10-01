@@ -42,7 +42,7 @@
   gap: var(--space-3);
 }
  
-.service-detail__header h2 {
+.service-detail__header h1 {
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -183,7 +183,7 @@
   align-self: start;
 }
  
-.service-detail__sidebar h3 {
+.service-detail__sidebar h2 {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -210,4 +210,3 @@
     align-items: start;
   }
 }
- 
