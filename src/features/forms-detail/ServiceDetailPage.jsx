@@ -16,7 +16,7 @@ export default function ServiceDetailPage() {
   if (!service) {
     return (
       <div>
-        <h2>Service not found</h2>
+        <h1>Service not found</h1>
         <p>
           <Link to="/services">Back to services</Link>
         </p>

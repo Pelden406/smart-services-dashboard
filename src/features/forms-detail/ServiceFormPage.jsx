@@ -3,6 +3,7 @@
  * Purpose: Route-level Add/Edit Service screen — handles both modes based
  * on whether an :id param is present, and wires ServiceForm to context.
  */
+import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ServiceForm from './ServiceForm';
 import { useServices } from '../../context/ServicesContext';
@@ -12,14 +13,15 @@ import './ServiceFormPage.css';
 export default function ServiceFormPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getServiceById, addService, updateService } = useServices();
+  const { getServiceById, createService, updateService } = useServices();
+  const [error, setError] = useState('');
   const isEditing = Boolean(id);
   const existing = isEditing ? getServiceById(id) : null;
  
   if (isEditing && !existing) {
     return (
       <div>
-        <h2>Service not found</h2>
+        <h1>Service not found</h1>
         <p>
           <Link to="/services">Back to services</Link>
         </p>
@@ -31,19 +33,29 @@ export default function ServiceFormPage() {
     ? { ...existing, cost: String(existing.cost) }
     : emptyService();
  
-  const handleSubmit = (values) => {
-    if (isEditing) {
-      updateService(id, values);
-      navigate(`/services/${id}`);
-    } else {
-      const created = addService(values);
-      navigate(`/services/${created.id}`);
+  const handleSubmit = async (values) => {
+    setError('');
+    try {
+      if (isEditing) {
+        await updateService(id, values);
+        navigate(`/services/${id}`);
+      } else {
+        const created = await createService(values);
+        navigate(`/services/${created.id}`);
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
  
   return (
     <div className="service-form-page">
-      <h2>{isEditing ? 'Edit service' : 'Add service'}</h2>
+      <h1>{isEditing ? 'Edit service' : 'Add service'}</h1>
+      {error && (
+        <p className="service-form-page__error" role="alert">
+          {error}
+        </p>
+      )}
       <ServiceForm
         initialValues={initialValues}
         onSubmit={handleSubmit}

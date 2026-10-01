@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import StatusBadge from '../../shared/StatusBadge';
 import Modal from '../../shared/Modal';
+import { useTabKeyboardNav } from '../../shared/useTabKeyboardNav';
 import { formatCurrency, formatDate, formatDateLong } from '../../data/serviceUtils';
 import './ServiceDetail.css';
  
@@ -16,6 +17,9 @@ export default function ServiceDetail({ service, onTogglePause, onDelete }) {
   const [activeTab, setActiveTab] = useState('Usage');
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const maxUsage = Math.max(...service.usageHistory, 1);
+  const { registerTab, handleKeyDown: handleTabKeyDown } = useTabKeyboardNav(TABS.length, (index) =>
+    setActiveTab(TABS[index]),
+  );
  
   return (
     <div className="service-detail">
@@ -28,7 +32,7 @@ export default function ServiceDetail({ service, onTogglePause, onDelete }) {
         <div className="service-detail__main">
           <div className="service-detail__header">
             <div>
-              <h2>{service.name}</h2>
+              <h1>{service.name}</h1>
               <span className="service-detail__subtitle">
                 {service.provider} · account #{service.accountNumber}
               </span>
@@ -66,16 +70,19 @@ export default function ServiceDetail({ service, onTogglePause, onDelete }) {
           </div>
  
           <div className="service-detail__tabs" role="tablist" aria-label="Service information">
-            {TABS.map((tab) => (
+            {TABS.map((tab, index) => (
               <button
                 key={tab}
                 type="button"
                 role="tab"
                 id={`tab-${tab}`}
+                ref={registerTab(index)}
                 aria-selected={activeTab === tab}
                 aria-controls={`panel-${tab}`}
+                tabIndex={activeTab === tab ? 0 : -1}
                 className={`service-detail__tab${activeTab === tab ? ' is-active' : ''}`}
                 onClick={() => setActiveTab(tab)}
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
               >
                 {tab}
               </button>
@@ -119,7 +126,7 @@ export default function ServiceDetail({ service, onTogglePause, onDelete }) {
         </div>
  
         <aside className="service-detail__sidebar">
-          <h3>Next actions</h3>
+          <h2>Next actions</h2>
           <ul className="service-detail__next-actions">
             <li>Compare plans</li>
             <li>Download invoice</li>

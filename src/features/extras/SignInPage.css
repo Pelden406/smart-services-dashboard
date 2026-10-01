@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
 }
-
+ 
 .signin-page__brand {
   background: var(--color-accent-800);
   color: #fff;
@@ -12,7 +12,7 @@
   flex-direction: column;
   gap: var(--space-3);
 }
-
+ 
 .signin-page__brand-name {
   font-family: var(--font-heading);
   font-weight: 700;
@@ -20,14 +20,14 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-
+ 
 .signin-page__brand-copy {
   font-size: 14px;
   line-height: 1.6;
   color: var(--color-accent-200);
   max-width: 420px;
 }
-
+ 
 .signin-page__form-panel {
   flex: 1;
   display: flex;
@@ -36,7 +36,7 @@
   padding: var(--space-6) var(--space-4);
   background: var(--color-bg);
 }
-
+ 
 .signin-page__form {
   width: 100%;
   max-width: 360px;
@@ -44,12 +44,51 @@
   flex-direction: column;
   gap: var(--space-4);
 }
-
+ 
 .signin-page__form h1 {
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  margin: 0;
 }
-
+ 
+.signin-page__subhead {
+  margin: var(--space-1) 0 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+ 
+.signin-page__tabs {
+  display: flex;
+  background: var(--color-accent-100);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  gap: 4px;
+}
+ 
+.signin-page__tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: calc(var(--radius-sm) - 2px);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+ 
+.signin-page__tab:hover {
+  color: var(--color-accent-700);
+}
+ 
+.signin-page__tab.is-active {
+  background: var(--color-surface);
+  color: var(--color-accent-700);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+ 
 .signin-page__row {
   display: flex;
   align-items: center;
@@ -57,35 +96,39 @@
   font-size: 13px;
   color: var(--color-text-muted);
 }
-
+ 
 .signin-page__remember {
   display: flex;
   align-items: center;
   gap: var(--space-2);
 }
-
+ 
 .signin-page__link {
   color: var(--color-accent-700);
   cursor: default;
 }
-
-.signin-page__signup {
-  text-align: center;
+ 
+.signin-page__error {
   font-size: 13px;
-  color: var(--color-text-muted);
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  margin: 0;
 }
-
+ 
 @media (min-width: 768px) {
   .signin-page {
     flex-direction: row;
   }
-
+ 
   .signin-page__brand {
     flex: 1;
     justify-content: center;
     padding: var(--space-8);
   }
-
+ 
   .signin-page__form-panel {
     flex: 1;
   }
