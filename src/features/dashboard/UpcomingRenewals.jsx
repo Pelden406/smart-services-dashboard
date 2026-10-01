@@ -5,17 +5,17 @@
 import { Link } from 'react-router-dom';
 import { formatCurrency, formatDate } from '../../data/serviceUtils';
 import './UpcomingRenewals.css';
-
+ 
 export default function UpcomingRenewals({ services }) {
   return (
     <section className="upcoming-renewals" aria-labelledby="upcoming-renewals-heading">
       <div className="upcoming-renewals__header">
-        <h3 id="upcoming-renewals-heading">Upcoming renewals</h3>
+        <h2 id="upcoming-renewals-heading">Upcoming renewals</h2>
         <Link to="/services" className="upcoming-renewals__view-all">
           View all
         </Link>
       </div>
-
+ 
       {services.length === 0 ? (
         <p className="upcoming-renewals__empty">Nothing renewing soon.</p>
       ) : (

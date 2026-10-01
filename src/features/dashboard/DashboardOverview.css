@@ -3,48 +3,48 @@
   flex-direction: column;
   gap: var(--space-5);
 }
-
+ 
 .dashboard-overview__header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
 }
-
-.dashboard-overview__header h2 {
+ 
+.dashboard-overview__header h1 {
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-
+ 
 .dashboard-overview__subtitle {
   font-size: 12px;
   color: var(--color-text-subtle);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
-
+ 
 .dashboard-overview__header .btn {
   margin-left: auto;
 }
-
+ 
 .dashboard-overview__stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-4);
 }
-
+ 
 .dashboard-overview__panels {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-4);
 }
-
+ 
 @media (min-width: 640px) {
   .dashboard-overview__stats {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-
+ 
 @media (min-width: 960px) {
   .dashboard-overview__panels {
     grid-template-columns: 1.6fr 1fr;

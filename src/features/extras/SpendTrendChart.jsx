@@ -4,21 +4,26 @@
  */
 import { SPEND_TREND_CATEGORIES } from '../../data/spendTrend';
 import './SpendTrendChart.css';
-
+ 
 const CATEGORY_CLASSES = {
   Utility: 'spend-trend-chart__segment--utility',
   Subscription: 'spend-trend-chart__segment--subscription',
   Booking: 'spend-trend-chart__segment--booking',
 };
-
+ 
+function formatMonthLabel(monthKey) {
+  const [year, month] = monthKey.split('-').map(Number);
+  return new Date(year, month - 1, 1).toLocaleDateString(undefined, { month: 'short' });
+}
+ 
 export default function SpendTrendChart({ trend, months = 6 }) {
   const data = trend.slice(-months);
-  const totals = data.map((month) => SPEND_TREND_CATEGORIES.reduce((sum, c) => sum + month[c], 0));
+  const totals = data.map((month) => SPEND_TREND_CATEGORIES.reduce((sum, c) => sum + (month[c] || 0), 0));
   const max = Math.max(...totals, 1);
-
+ 
   return (
     <section className="spend-trend-chart" aria-labelledby="spend-trend-heading">
-      <h3 id="spend-trend-heading">Monthly spend by category</h3>
+      <h2 id="spend-trend-heading">Monthly spend by category</h2>
       <div className="spend-trend-chart__bars">
         {data.map((month, index) => (
           <div className="spend-trend-chart__col" key={month.month}>
@@ -27,12 +32,14 @@ export default function SpendTrendChart({ trend, months = 6 }) {
                 <div
                   key={category}
                   className={`spend-trend-chart__segment ${CATEGORY_CLASSES[category]}`}
-                  style={{ height: `${(month[category] / totals[index]) * 100}%` }}
-                  title={`${category}: $${month[category]}`}
+                  style={{
+                    height: `${totals[index] === 0 ? 0 : ((month[category] || 0) / totals[index]) * 100}%`,
+                  }}
+                  title={`${category}: $${month[category] || 0}`}
                 />
               ))}
             </div>
-            <span className="spend-trend-chart__month">{month.month}</span>
+            <span className="spend-trend-chart__month">{formatMonthLabel(month.month)}</span>
           </div>
         ))}
       </div>

@@ -7,36 +7,36 @@
   flex-direction: column;
   gap: var(--space-3);
 }
-
+ 
 .upcoming-renewals__header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
 }
-
-.upcoming-renewals__header h3 {
+ 
+.upcoming-renewals__header h2 {
   font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-
+ 
 .upcoming-renewals__view-all {
   font-size: 12px;
   font-weight: 500;
   text-decoration: none;
 }
-
+ 
 .upcoming-renewals__empty {
   font-size: 13px;
   color: var(--color-text-muted);
 }
-
+ 
 .upcoming-renewals__table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
 }
-
+ 
 .upcoming-renewals__table th {
   text-align: left;
   font-size: 11px;
@@ -47,28 +47,32 @@
   padding: var(--space-2) var(--space-2) var(--space-2) 0;
   border-bottom: 1px solid var(--color-border);
 }
-
+ 
 .upcoming-renewals__table td {
   padding: var(--space-3) var(--space-2) var(--space-3) 0;
   border-bottom: 1px solid var(--color-border);
   transition: background-color 0.15s ease;
 }
-
+ 
 .upcoming-renewals__table tr:last-child td {
   border-bottom: none;
 }
-
+ 
 .upcoming-renewals__table tr:hover td {
   background: var(--color-accent-100);
 }
-
+ 
 .upcoming-renewals__table a {
   color: var(--color-text);
-  text-decoration: none;
   font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
-
+ 
 .upcoming-renewals__table a:hover {
   color: var(--color-accent-700);
-  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
 }
