@@ -1,3 +1,9 @@
+/**
+ * Owner: Sonam — Services List & Search/Filter
+ * Purpose: Route-level Services List screen — wires search, filters and
+ * sort state together and renders the resulting list.
+ */
+ 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
@@ -19,7 +25,7 @@ export default function ServicesPage() {
   return (
     <div className="services-page">
       <div className="services-page__header">
-        <h2>Services</h2>
+        <h1>Services</h1>
         <Link to="/services/new" className="btn btn-primary">
           + Add service
         </Link>
@@ -44,3 +50,4 @@ export default function ServicesPage() {
     </div>
   );
 }
+ 

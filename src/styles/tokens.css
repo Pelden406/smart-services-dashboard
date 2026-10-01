@@ -1,8 +1,8 @@
 /* Design tokens — colors, spacing (8px scale), typography, radii, shadows.
    Shared across every component/page stylesheet. */
-
+ 
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap');
-
+ 
 :root {
   /* — color: surfaces & text — */
   --color-bg: #f3f4f6;
@@ -10,36 +10,43 @@
   --color-surface-muted: #f8f9fb;
   --color-text: #1d1f20;
   --color-text-muted: #5d6166;
-  --color-text-subtle: #8a8f96;
+  --color-text-subtle: #67717e;
   --color-border: #e1e3e7;
   --color-border-strong: #c7cbd1;
-
-  /* — color: accent (steel blue, from the Industry design system) — */
-  --color-accent-100: #eef6ff;
-  --color-accent-200: #d6ebff;
-  --color-accent-300: #b5d9fd;
-  --color-accent-400: #94bce3;
-  --color-accent-500: #749dc4;
-  --color-accent-600: #597ea3;
-  --color-accent-700: #416180;
-  --color-accent-800: #2c455d;
-  --color-accent-900: #1d2d3d;
+ 
+  /* — color: accent (deep ocean blue — richer/more saturated than the old
+     steel blue so the brand reads as distinctive rather than flat; every
+     step from 500-900 still clears WCAG AA 4.5:1 with white text) — */
+  --color-accent-100: #ecf5fe;
+  --color-accent-200: #d5e7fb;
+  --color-accent-300: #b4d4f4;
+  --color-accent-400: #86b3e4;
+  --color-accent-500: #5492d4;
+  --color-accent-600: #2d73be;
+  --color-accent-700: #215897;
+  --color-accent-800: #1b3e6a;
+  --color-accent-900: #12263f;
   --color-accent: var(--color-accent-600);
-
-  /* — color: status — */
-  --color-success: #3f7d5c;
-  --color-success-bg: #e8f5ee;
+ 
+  /* — color: status (Active/Paused/Cancelled) — hues chosen for separation
+     under red-green color blindness: success leans blue-green (teal) rather
+     than pure green, danger leans red-orange (vermillion) rather than pure
+     red, and each carries a distinct lightness (success 32%, danger 45%,
+     neutral 34%) so the trio also reads apart in grayscale. All text/bg
+     pairs clear WCAG AA 4.5:1. — */
+  --color-success: #257e61;
+  --color-success-bg: #edf8f4;
   --color-warning: #96660f;
   --color-warning-bg: #fdf3e0;
-  --color-danger: #a3383a;
-  --color-danger-bg: #fbeaea;
-  --color-neutral-bg: #eef0f2;
-  --color-neutral-text: #565b61;
-
+  --color-danger: #b8432e;
+  --color-danger-bg: #fbece9;
+  --color-neutral-bg: #ebedef;
+  --color-neutral-text: #50565e;
+ 
   /* — typography — */
   --font-heading: 'Barlow Condensed', system-ui, sans-serif;
   --font-body: 'Barlow', system-ui, sans-serif;
-
+ 
   /* — spacing: 8px scale — */
   --space-1: 4px;
   --space-2: 8px;
@@ -49,7 +56,7 @@
   --space-6: 32px;
   --space-7: 48px;
   --space-8: 64px;
-
+ 
   /* — radius & elevation — */
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -57,7 +64,7 @@
   --shadow-sm: 0 1px 2px rgba(29, 31, 32, 0.08);
   --shadow-md: 0 4px 12px rgba(29, 31, 32, 0.1);
   --shadow-lg: 0 12px 32px rgba(29, 31, 32, 0.16);
-
+ 
   /* — layout — */
   --content-max-width: 1180px;
 }

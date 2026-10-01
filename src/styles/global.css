@@ -202,6 +202,27 @@ textarea.input {
   border-color: var(--color-danger);
 }
  
+/* — form error summary, shown above a form after a failed submit attempt — */
+.form-error-summary {
+  font-size: 13px;
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+ 
+.form-error-summary p {
+  margin: 0 0 var(--space-1);
+  font-weight: 600;
+}
+ 
+.form-error-summary ul {
+  margin: 0;
+  padding-left: var(--space-4);
+  list-style: disc;
+}
+ 
 /* — status tag / badge, shared by ServiceCard, ServiceList, ServiceDetail — */
 .tag {
   display: inline-flex;
