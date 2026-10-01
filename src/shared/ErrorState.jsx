@@ -3,12 +3,18 @@
  * Purpose: Shown when the simulated data fetch fails; lets the user retry.
  */
 import './ErrorState.css';
-
-export default function ErrorState({ onRetry }) {
+ 
+export default function ErrorState({
+  onRetry,
+  title = "Couldn't load services",
+  message = 'The request failed or timed out. Your data is safe — try again.',
+  level = 2,
+}) {
+  const Heading = level === 1 ? 'h1' : 'h2';
   return (
     <div className="error-state" role="alert">
-      <h2>Couldn't load services</h2>
-      <p>The request failed or timed out. Your data is safe — try again.</p>
+      <Heading>{title}</Heading>
+      <p>{message}</p>
       <button type="button" className="btn btn-primary" onClick={onRetry}>
         Retry
       </button>

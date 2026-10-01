@@ -1,80 +1,100 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { services as seedServices } from '../data/services';
-import { generateId } from '../data/serviceUtils';
-
-// Shared store for services, so the dashboard, list, detail and form
-// screens all read/write the same data. Mirrored to localStorage so a
-// browser refresh doesn't wipe out changes made during the session.
-//
-// Loading the list is simulated as an async fetch (a fixed delay, with an
-// occasional simulated failure) so the app has real loading/error states to
-// show, even though the "backend" is just localStorage.
+import { apiFetch } from '../api/client';
+import { formatRelativeTime } from '../data/notifications';
+ 
+// Shared store for services, backed by the real API, so the dashboard, list,
+// detail and form screens all read/write the same data.
 const ServicesContext = createContext(null);
-const STORAGE_KEY = 'smart-services-dashboard:services';
-const SIMULATED_LOAD_DELAY_MS = 700;
-const SIMULATED_FAILURE_RATE = 0.2;
-
-function readStoredServices() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : seedServices;
-  } catch {
-    return seedServices;
-  }
+ 
+function normalizeNotification(raw) {
+  return {
+    id: raw._id,
+    type: raw.type.toLowerCase(),
+    title: raw.message,
+    meta: formatRelativeTime(raw.createdAt),
+    read: raw.read,
+  };
 }
-
+ 
+function normalizeService(raw) {
+  return {
+    ...raw,
+    id: raw._id,
+    renewalDate: raw.renewalDate ? raw.renewalDate.slice(0, 10) : null,
+    activity: (raw.activity || []).map((entry) => ({
+      ...entry,
+      date: entry.date ? entry.date.slice(0, 10) : entry.date,
+    })),
+  };
+}
+ 
 export function ServicesProvider({ children }) {
   const [services, setServices] = useState([]);
-  const [status, setStatus] = useState('loading'); // 'loading' | 'error' | 'success'
-
+  const [status, setStatus] = useState('loading'); // 'loading' | 'error' | 'success' | 'unauthenticated'
+ 
   const load = useCallback(() => {
-    setStatus('loading');
-    const timer = setTimeout(() => {
-      if (Math.random() < SIMULATED_FAILURE_RATE) {
-        setStatus('error');
-        return;
-      }
-      setServices(readStoredServices());
-      setStatus('success');
-    }, SIMULATED_LOAD_DELAY_MS);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => load(), [load]);
-
-  useEffect(() => {
-    if (status !== 'success') return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(services));
-    } catch {
-      // Storage unavailable (e.g. private browsing) — state still works in-memory.
+    if (!localStorage.getItem('token')) {
+      setStatus('unauthenticated');
+      return;
     }
-  }, [services, status]);
-
+    setStatus('loading');
+    apiFetch('/services')
+      .then((data) => {
+        setServices(data.map(normalizeService));
+        setStatus('success');
+      })
+      .catch(() => {
+        setStatus('error');
+      });
+  }, []);
+ 
+  useEffect(() => load(), [load]);
+ 
   const value = useMemo(
     () => ({
       services,
       status,
-      retry: load,
+      refetch: load,
       getServiceById: (id) => services.find((s) => s.id === id),
-      addService: (service) => {
-        const newService = { ...service, id: generateId() };
-        setServices((prev) => [newService, ...prev]);
-        return newService;
+      createService: async (service) => {
+        const created = await apiFetch('/services', {
+          method: 'POST',
+          body: JSON.stringify(service),
+        });
+        load();
+        return normalizeService(created);
       },
-      updateService: (id, updates) => {
-        setServices((prev) => prev.map((s) => (s.id === id ? { ...s, ...updates } : s)));
+      updateService: async (id, updates) => {
+        const updated = await apiFetch(`/services/${id}`, {
+          method: 'PUT',
+          body: JSON.stringify(updates),
+        });
+        load();
+        return normalizeService(updated);
       },
-      deleteService: (id) => {
-        setServices((prev) => prev.filter((s) => s.id !== id));
+      deleteService: async (id) => {
+        await apiFetch(`/services/${id}`, { method: 'DELETE' });
+        load();
+      },
+      getSpendTrend: async (months) => {
+        const data = await apiFetch(`/analytics/spend-trend?months=${months}`);
+        return data.series;
+      },
+      getNotifications: async () => {
+        const data = await apiFetch('/notifications');
+        return data.map(normalizeNotification);
+      },
+      markNotificationRead: async (id) => {
+        const updated = await apiFetch(`/notifications/${id}/read`, { method: 'PATCH' });
+        return normalizeNotification(updated);
       },
     }),
     [services, status, load],
   );
-
+ 
   return <ServicesContext.Provider value={value}>{children}</ServicesContext.Provider>;
 }
-
+ 
 export function useServices() {
   const ctx = useContext(ServicesContext);
   if (!ctx) throw new Error('useServices must be used within a ServicesProvider');

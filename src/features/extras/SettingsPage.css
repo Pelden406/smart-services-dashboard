@@ -4,12 +4,12 @@
   gap: var(--space-4);
   max-width: 640px;
 }
-
-.settings-page h2 {
+ 
+.settings-page h1 {
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-
+ 
 .settings-page__form {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -19,13 +19,13 @@
   flex-direction: column;
   gap: var(--space-4);
 }
-
+ 
 .settings-page__avatar-row {
   display: flex;
   align-items: center;
   gap: var(--space-4);
 }
-
+ 
 .settings-page__avatar {
   width: 56px;
   height: 56px;
@@ -39,13 +39,13 @@
   font-weight: 600;
   font-size: 18px;
 }
-
+ 
 .settings-page__grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-4);
 }
-
+ 
 .settings-page__preferences {
   display: flex;
   flex-direction: column;
@@ -53,28 +53,28 @@
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-4);
 }
-
+ 
 .settings-page__toggle-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 14px;
 }
-
+ 
 .settings-page__footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: var(--space-3);
 }
-
+ 
 .settings-page__saved {
   margin-right: auto;
   font-size: 13px;
   color: var(--color-success);
   font-weight: 500;
 }
-
+ 
 @media (min-width: 640px) {
   .settings-page__grid {
     grid-template-columns: repeat(2, 1fr);
