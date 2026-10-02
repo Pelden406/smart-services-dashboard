@@ -68,6 +68,7 @@
  
   .home-nav__links a:hover {
     color: var(--color-text);
+    background-color: var(--color-accent-300);
   }
 }
  
