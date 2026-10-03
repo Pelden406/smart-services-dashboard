@@ -157,6 +157,7 @@ export default function HomePage() {
         <div className="home-nav__inner">
           <span className="home-nav__brand">SmartServices</span>
           <nav className="home-nav__links" aria-label="Primary">
+            <a href="#top">Home</a>
             <a href="#features">Features</a>
             <a href="#how-it-works">How it works</a>
           </nav>

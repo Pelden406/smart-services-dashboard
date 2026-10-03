@@ -68,7 +68,7 @@
  
 .top-nav__links a:hover {
   color: var(--color-accent-700);
-  background: var(--color-accent-100);
+  background: var(--color-accent-300);
 }
  
 .top-nav__links a.is-active {
