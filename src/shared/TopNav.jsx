@@ -21,13 +21,21 @@ export default function TopNav() {
   };
  
   const links = [
-    { to: '/', label: 'Home', end: true },
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/services', label: 'Services' },
     { to: '/notifications', label: 'Notifications' },
     { to: '/analytics', label: 'Analytics' },
     { to: '/settings', label: 'Settings' },
   ];
+ 
+  // UI hint only — the API rejects non-admins regardless of what's stored here.
+  let isAdmin = false;
+  try {
+    isAdmin = JSON.parse(localStorage.getItem('user'))?.role === 'admin';
+  } catch {
+    isAdmin = false;
+  }
+  if (isAdmin) links.push({ to: '/admin/users', label: 'Admin' });
  
   return (
     <header className="top-nav">

@@ -4,7 +4,7 @@
  * backend and stores the returned JWT for subsequent API calls.
  */
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../../api/client';
 import { useServices } from '../../context/ServicesContext';
 import { useTabKeyboardNav } from '../../shared/useTabKeyboardNav';
@@ -85,7 +85,7 @@ export default function SignInPage() {
       const data = await apiFetch(endpoint, { method: 'POST', body: JSON.stringify(body) });
  
       localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify({ id: data.id, name: data.name, email: data.email }));
+      localStorage.setItem('user', JSON.stringify({ id: data.id, name: data.name, email: data.email, role: data.role }));
       refetch();
       navigate('/dashboard');
     } catch (err) {
@@ -107,6 +107,10 @@ export default function SignInPage() {
  
       <div className="signin-page__form-panel">
         <form className="signin-page__form" onSubmit={handleSubmit} noValidate>
+          <Link to="/" className="signin-page__back">
+            <span aria-hidden="true">←</span> Back to home
+          </Link>
+ 
           <div className="signin-page__tabs" role="tablist" aria-label="Sign in or create account">
             <button
               type="button"
