@@ -8,6 +8,7 @@
  Rocket Money - Take control of your money. (n.d.). Rocket Money - Take Control of Your Money. Retrieved September 2, 2026, from https://www.rocketmoney.com/
  */
 import { Link } from 'react-router-dom';
+import Footer from '../../shared/Footer';
 import './HomePage.css';
 
 const STATS = [
@@ -258,31 +259,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="home-footer">
-        <div className="home-footer__inner">
-          <div className="home-footer__brand">
-            <span className="home-nav__brand">SmartServices</span>
-            <p>Track every subscription, utility and booking in one dashboard.</p>
-          </div>
-          <div className="home-footer__links">
-            <div>
-              <span className="home-footer__heading">Product</span>
-              <Link to="/signin">Dashboard</Link>
-              <Link to="/signin">Services</Link>
-              <Link to="/signin">Analytics</Link>
-              <Link to="/signin">Notifications</Link>
-            </div>
-            <div>
-              <span className="home-footer__heading">Account</span>
-              <Link to="/signin">Log in</Link>
-              <Link to="/onboarding">Onboarding</Link>
-            </div>
-          </div>
-        </div>
-        <p className="home-footer__copyright">
-          Built by Charity, Sonam & Zubair for Web Development Assessment 2.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

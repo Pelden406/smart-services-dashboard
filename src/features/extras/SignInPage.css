@@ -45,6 +45,22 @@
   gap: var(--space-4);
 }
  
+.signin-page__back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+ 
+.signin-page__back:hover {
+  color: var(--color-accent-700);
+}
+ 
 .signin-page__form h1 {
   text-transform: uppercase;
   letter-spacing: 0.02em;
