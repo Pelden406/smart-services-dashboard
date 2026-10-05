@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import './Footer.css';
  
 const quickLinks = [
+  { to: '/', label: 'Home' },
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/services', label: 'Services' },
   { to: '/notifications', label: 'Notifications' },
@@ -75,7 +76,7 @@ export default function Footer() {
  
       <div className="app-footer__legal">
         <p className="app-footer__copyright">
-          © 2026 SmartServices. Built as a student project for ICT930 Assessment 3.
+          © 2026 SmartServices.
         </p>
         <div className="app-footer__legal-links">
           <a href="#">Privacy Policy</a>

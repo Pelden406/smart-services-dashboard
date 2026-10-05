@@ -15,6 +15,7 @@ import DashboardPage from './features/dashboard/DashboardPage';
 import ServicesPage from './features/services-list/ServicesPage'; 
 import ServiceDetailPage from './features/forms-detail/ServiceDetailPage'; 
 import ServiceFormPage from './features/forms-detail/ServiceFormPage'; 
+import AdminUsersPage from './features/admin/AdminUsersPage'; 
 import { ServicesProvider } from './context/ServicesContext'; 
  
 export default function App() { 
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="notifications" element={<NotificationsPage />} /> 
             <Route path="analytics" element={<AnalyticsPage />} /> 
             <Route path="settings" element={<SettingsPage />} /> 
+            <Route path="admin/users" element={<AdminUsersPage />} /> 
             <Route path="*" element={<NotFoundPage />} /> 
           </Route> 
         </Routes> 

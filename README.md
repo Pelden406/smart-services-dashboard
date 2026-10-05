@@ -1,87 +1,166 @@
 # Smart Services Dashboard
 
-A subscription and utility management frontend built for **ICT930 Advanced Web Application Development — Assessment 2**. The app lets a user track their recurring services (subscriptions, utilities, bookings), search and filter them, view detailed information, and add or edit services through a validated form — alongside a marketing landing page, analytics, notifications, and account settings.
+A full-stack subscription and utility manager built for **ICT930 Advanced Web Application Development — Assessment 3**. Users register, log in, and track their recurring services (subscriptions, utilities, bookings): search and filter them, view spend analytics, receive notifications, and add, edit, pause or delete services. Administrators can also manage user accounts.
 
 ## Project Overview
 
-Smart Services Dashboard simulates a real-world frontend developer task: consuming and managing structured service data through a clean, component-based UI. The application includes a public marketing homepage, a sign-in and onboarding flow, a dashboard overview, a searchable/filterable services list, individual service detail views, a full add/edit form flow, notifications, spending analytics, and account settings.
+People who subscribe to many services manage them across separate apps, emails and paper bills, so renewals are missed and total spend is unclear. Smart Services Dashboard gives one place to see what you pay for, when it renews, and how spend changes over time.
+
+The system has three tiers: a React single-page application, an Express REST API, and a MongoDB Atlas database accessed through Mongoose. After login the frontend sends a JSON Web Token (JWT) with every request, and every query is scoped to the logged-in user.
 
 ## Technology Stack
 
-- **React** (functional components + hooks)
-- **React Router** — client-side, multi-page navigation
-- **Plain CSS** — no CSS framework; component-scoped stylesheets following an 8px spacing scale, with shared design tokens (colour, typography, spacing) defined once and reused everywhere
-- **Vite** — build tooling and dev server
-- **React Context** — shared in-memory state (`ServicesContext`) across screens
-- **localStorage** — persists service data across page refreshes (no backend/API)
+| Layer | Technology |
+|---|---|
+| Frontend | React (functional components and hooks), React Router, plain CSS with shared design tokens, Vite |
+| State | React Context (`ServicesContext`) |
+| Backend | Node.js, Express, bcryptjs, jsonwebtoken, cors, dotenv |
+| Database | MongoDB Atlas via Mongoose |
+| Tooling | npm, nodemon, oxlint, Git and GitHub |
 
 ## Installation Instructions
+
+**Prerequisites:** Node.js 18 or later, and access to the team's MongoDB Atlas database (ask a team member for the connection values; your IP address must be allowed under Atlas Network Access).
 
 ```
 git clone https://github.com/Pelden406/smart-services-dashboard.git
 cd smart-services-dashboard
+```
+
+**1. Backend** (first terminal)
+
+Create `backend/.env` with:
+
+```
+MONGO_URI=<your MongoDB Atlas connection string>
+JWT_SECRET=<a long random string>
+PORT=5000
+```
+
+- If the database password contains special characters such as `@`, URL-encode them (`@` becomes `%40`).
+- `.env` is git-ignored. Never commit it.
+
+```
+cd backend
 npm install
 npm run dev
 ```
 
-The app will be available locally, typically at `http://localhost:5173/`.
+You should see `Server running on port 5000` and `MongoDB connected successfully`.
 
-To build for production:
+**2. Frontend** (second terminal, from the project root)
+
 ```
-npm run build
+npm install
+npm run dev
 ```
 
-To check code quality:
+Open `http://localhost:5173/`. Both servers must be running. Register an account on the **Create Account** tab, then log in.
+
+**Other commands**
+
 ```
-npm run lint
+npm run build        # production build (frontend)
+npm run lint         # code quality check (frontend)
 ```
+
+**Creating an administrator:** register a normal account first, then from the `backend` folder run:
+
+```
+npm run make-admin -- <user-email>
+```
+
+Add `--remove` to return that account to a normal user.
 
 ## Key Features
 
-- **Marketing homepage** — public landing page introducing the app
-- **Sign in & onboarding** — entry point and a multi-step introduction flow for new users
-- **Dashboard** — overview stats, upcoming renewals, and spend-by-category breakdown
-- **Services List** — search, category/status filters, sorting, responsive card and table layout
-- **Service Detail** — tabbed detail view with pause/edit actions
-- **Add/Edit Service Form** — inline validation, disabled submit until valid
-- **Notifications** — tabbed list of renewal, booking, and system notifications
-- **Analytics** — spend trends across 3/6/12 months with a savings goal
-- **Settings** — profile and account preferences
-- **Shared UI states** — loading skeletons, empty states, and error states used consistently across screens
-- **Responsive design** — mobile, tablet, and desktop layouts, including a collapsible hamburger navigation menu below 640px
-- **Data persistence** — changes survive a hard browser refresh via localStorage
+- **Authentication:** registration and login with bcrypt-hashed passwords and 7-day JWTs
+- **Services:** create, read, update, pause and delete, scoped per user
+- **Search, filter and sort:** live search by name, category and status filters, sorting by name or cost
+- **Dashboard:** active services, monthly spend, renewals due within 7 days, bookings, spend by category
+- **Analytics:** month-by-month spend by category over 3, 6 and 12 months from real cost history
+- **Notifications:** stored in the database, with mark-as-read that persists; welcome notifications created on sign-up
+- **Settings:** profile pre-filled from the logged-in account
+- **Admin:** administrators can view, create and delete users at `/admin/users`; admins cannot delete their own account or the last admin
+- **Marketing homepage and onboarding flow**
+- **Responsive design:** mobile, tablet and desktop layouts, with a hamburger menu below 640 px
+- **Accessibility:** WCAG 2.2 AA colour contrast, one h1 per page, labelled form fields, keyboard-operable tabs and dialogs, visible focus states, error summaries on forms
+
+## API Overview
+
+| Method and path | Purpose | Access |
+|---|---|---|
+| POST `/api/auth/register`, `/api/auth/login` | Create an account, log in | Public |
+| GET, POST `/api/services` | List (search, category, status, sortBy) and create | Logged in |
+| GET, PUT, DELETE `/api/services/:id` | Read, update, delete one service | Owner only |
+| GET `/api/analytics/stats`, `/api/analytics/spend-trend?months=3\|6\|12` | Dashboard figures and spend trend | Logged in |
+| GET `/api/notifications`, PATCH `/api/notifications/:id/read` | List and mark as read | Logged in |
+| GET, POST `/api/admin/users`, DELETE `/api/admin/users/:id` | Manage users | Admin only |
+| GET `/api/health` | Server check | Public |
+
+## Database Design
+
+Three collections in the `smart-services-dashboard` database:
+
+- **User:** name, email (unique), password (bcrypt hash), role (`user` or `admin`)
+- **Service:** userId (reference to User), name, provider, accountNumber, category, cost, billingCycle, status, renewalDate, reminder, notes, with embedded `usageHistory`, `activity` and `costHistory` arrays
+- **Notification:** userId (reference to User), type, message, read
+
+A user has many services and many notifications, linked by `userId`. Mongoose enforces required fields, allowed values (for example category and status) and numeric cost.
+
+## Security Measures
+
+- Passwords hashed with bcrypt (10 salt rounds); the plain password is never stored or returned
+- JWT required on every protected route; every query is filtered by the logged-in user's ID
+- Admin routes check the user's role in the database on every request, so removing admin access takes effect immediately
+- One generic message for a wrong email or password, which avoids revealing which accounts exist
+- Input validation in the front end and in the Mongoose schemas
+- A central error handler returns friendly messages; full error detail is logged on the server only
+- Secrets are kept in a git-ignored `.env` file
 
 ## Design Decisions
 
-- **Feature-based folder structure** (`src/features/dashboard`, `src/features/services-list`, `src/features/forms-detail`, `src/features/extras`, `src/features/marketing`) rather than grouping by file type, so each team member's section is self-contained and easy to navigate
-- **Shared Context over prop drilling** for service data, since multiple unrelated screens (dashboard, list, detail, form) all need read/write access to the same data
-- **Plain CSS over a utility framework** to keep styling explicit and easy for all team members to read and modify without a shared design-system dependency
-- **Mock data instead of a live API**, since the assignment scope is frontend-only; the data layer (`src/data/services.js`, `serviceUtils.js`) is structured so it could be swapped for real API calls with minimal changes
-- **Mobile-first responsive navigation** — the top navigation collapses into a hamburger menu below 640px rather than relying on horizontal scrolling, based on usability issues found during manual mobile testing
+- **Feature-based folders** (`dashboard`, `services-list`, `forms-detail`, `extras`, `marketing`, `admin`) so each team member's section is self-contained
+- **React Context over prop drilling:** services load once and refetch after any change, so every screen stays in sync
+- **Plain CSS with design tokens:** one set of colour, spacing and type variables (`src/styles/tokens.css`) keeps three developers visually consistent
+- **MongoDB:** the flexible document model matches the JSON shape the frontend already used, and Atlas gives the team one shared cloud database with no local install
+- **Mobile-first navigation:** the nav collapses into a hamburger menu after usability testing showed horizontal scrolling was not discoverable
+- **Accessible by design:** colours were rebuilt after contrast checks found three failures, and status colours also differ in lightness for colour-blind users
 
 ## Team
 
-| Section | Owner |
+| Member | Responsibilities |
 |---|---|
-| Dashboard, Data Layer, Analytics & Spend Trend, Marketing Homepage | Charity |
-| Services List, Search/Filter, Notifications & Settings | Sonam |
-| Forms, Service Detail, Sign In & Onboarding | Zubair |
+| Charity | Dashboard, Analytics and spend trend, Marketing homepage, analytics endpoints, admin features |
+| Sonam | Services list and search/filter, Notifications, Settings, backend setup, API client and integration |
+| Zubair | Forms and service detail, Sign In, Onboarding, authentication, services create/update/delete endpoints |
 
 ## Project Structure
 
 ```
+backend/
+├── config/        # MongoDB connection
+├── controllers/   # auth, services, analytics, notifications, admin
+├── middleware/    # JWT auth, admin check, error handler
+├── models/        # User, Service, Notification
+├── routes/        # one router per feature
+├── scripts/       # seedHistory.js, makeAdmin.js
+└── server.js
 src/
-├── features/
-│   ├── dashboard/        # Charity — DashboardPage, StatsCard, UpcomingRenewals, SpendByCategoryChart
-│   ├── services-list/    # Sonam — ServicesPage, ServiceList, ServiceCard, SearchBar, FilterPanel
-│   ├── forms-detail/     # Zubair — ServiceFormPage, ServiceForm, ServiceDetailPage, ServiceDetail
-│   ├── extras/           # Analytics, SpendTrendChart, Notifications, Settings, SignIn, Onboarding
-│   └── marketing/        # Public HomePage
-├── shared/                # Nav, layout, footer, loading/empty/error states, modal
-├── data/                  # Mock data + helper functions
-├── context/                # ServicesContext (shared state)
-├── styles/                # Design tokens and global styles
+├── api/           # fetch wrapper that attaches the JWT
+├── context/       # ServicesContext (shared state)
+├── features/      # dashboard, services-list, forms-detail, extras, marketing, admin
+├── shared/        # nav, footer, layout, modal, loading/empty/error states, keyboard-nav hook
+├── data/          # constants and helper functions
+├── styles/        # design tokens and global styles
 ├── App.jsx
 └── main.jsx
 ```
 
+## Known Limitations and Future Work
+
+- No automated unit tests (testing was done with curl and Playwright)
+- Settings preferences are stored in the browser, not the database
+- Login is not rate-limited, CORS is open to all origins, and the token is kept in `localStorage`
+- Runs locally against a shared cloud database; deployment (for example Vercel and Render) is a future step
+- Analytics history is seeded for demonstration rather than accumulated from long-term use
